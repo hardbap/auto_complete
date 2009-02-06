@@ -50,6 +50,12 @@ module AutoCompleteMacrosHelper
   #                                  The expression should take two variables: element and value.
   #                                  Element is a DOM element for the field, value
   #                                  is the value selected by the user.
+  # <tt>:update_element</tt>::       From the scriptaculous wiki:
+  #                                  Hook for a custom function to replace the built-in function
+  #                                  that adds the list item text to the input field. The custom 
+  #                                  function is called after the element has been updated (i.e. 
+  #                                  when the user has selected an entry). The function receives 
+  #                                  one parameter only: the selected item (the <li> item selected) 
   # <tt>:select</tt>::               Pick the class of the element from which the value for 
   #                                  insertion should be extracted. If this is not specified,
   #                                  the entire element is used.
@@ -70,6 +76,11 @@ module AutoCompleteMacrosHelper
     js_options[:frequency]  = "#{options[:frequency]}" if options[:frequency]
     js_options[:method]     = "'#{options[:method].to_s}'" if options[:method]
 
+    { :update_element => :updateElement, 
+      :on_show => :onShow, :on_hide => :onHide, :min_chars => :minChars }.each do |k,v|
+      js_options[v] = options[k] if options[k]
+    end    
+    
     { :after_update_element => :afterUpdateElement, 
       :on_show => :onShow, :on_hide => :onHide, :min_chars => :minChars }.each do |k,v|
       js_options[v] = options[k] if options[k]
